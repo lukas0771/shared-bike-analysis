@@ -13,6 +13,7 @@
 """
 import argparse
 import concurrent.futures
+import csv
 import os
 import time
 import urllib.request
@@ -67,9 +68,12 @@ def extract_and_verify(ym: str, zip_path: str, year: int, ods_root: str):
         zf.extractall(dest)
     csv_name = next(f for f in os.listdir(dest) if f.endswith(".csv"))
     csv_path = os.path.join(dest, csv_name)
-    with open(csv_path, "r", encoding="utf-8") as fh:
-        header = set(fh.readline().strip().split(","))
-        n_rows = sum(1 for _ in fh)
+    # 官方 2025 起 CSV 全字段带引号("ride_id",...),用 csv.reader 解析才能对上裸列名;
+    # utf-8-sig 兼容可能存在的 BOM
+    with open(csv_path, "r", encoding="utf-8-sig", newline="") as fh:
+        rows = csv.reader(fh)
+        header = {col.strip() for col in next(rows)}
+        n_rows = sum(1 for _ in rows)
     missing = EXPECTED_HEADER - header
     status = "表头OK" if not missing else f"表头缺失: {sorted(missing)}"
     return f"[ok] {ym}: {n_rows:,} 行, {csv_name}, {status}"
