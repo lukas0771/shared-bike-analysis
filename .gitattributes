@@ -1,0 +1,7 @@
+# 生成产物不参与 GitHub 语言统计(修复语言条被 HTML/数据产物淹没的问题)
+dashboard/*.html linguist-generated
+report/*.html linguist-generated
+analysis/*.ipynb linguist-generated
+data/ads/** linguist-generated
+data/dwd/_quality.json linguist-generated
+data/sample/** linguist-generated
