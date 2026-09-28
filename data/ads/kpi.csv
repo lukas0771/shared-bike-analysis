@@ -1,0 +1,2 @@
+n_rides,n_member,n_casual,n_classic,n_electric,avg_min,p50_min,active_stations,electric_offstation_pct,peak_date,peak_day_rides,n_days
+5547380,3552569,1994811,1942444,3604936,14.5,9.4,3360,34.3,2025-08-02,32267,366

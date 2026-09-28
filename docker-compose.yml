@@ -1,0 +1,33 @@
+services:
+  # 一键管道:下载 → 清洗(ODS→DWD) → 指标(ADS) → 看板 → 报告
+  pipeline:
+    build: .
+    container_name: divvy-pipeline
+    volumes:
+      - ./warehouse:/app/warehouse      # 原始/中间数据(不入 git)
+      - ./data:/app/data                # 指标层与样本(入 git)
+      - ./dashboard:/app/dashboard      # 产出的交互看板
+      - ./report:/app/report            # 产出的 EDA 报告
+      - ./src:/app/src
+
+  # Jupyter Lab:交互式 EDA(notebook 见 analysis/)
+  jupyter:
+    build: .
+    container_name: divvy-jupyter
+    command: jupyter lab --ip=0.0.0.0 --no-browser --allow-root --ServerApp.token=divvy
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./warehouse:/app/warehouse
+      - ./analysis:/app/analysis
+      - ./data:/app/data
+
+  # 静态站点:浏览器打开 http://localhost:8080/dashboard/ 与 /report/
+  web:
+    image: nginx:alpine
+    container_name: divvy-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./dashboard:/usr/share/nginx/html/dashboard:ro
+      - ./report:/usr/share/nginx/html/report:ro

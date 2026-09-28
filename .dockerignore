@@ -1,0 +1,7 @@
+.venv
+warehouse
+tmp
+*.log
+__pycache__
+.ipynb_checkpoints
+.git

@@ -1,0 +1,13 @@
+# 数据仓库(原始/中间数据,可由 00 脚本一键重建,不入库)
+warehouse/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# 编辑器/系统
+.DS_Store
+*.log
+tmp/

@@ -1,0 +1,16 @@
+{
+  "year": 2025,
+  "n_raw": 5552994,
+  "n_distinct_ride_id": 5552994,
+  "dropped_bad_time": 0,
+  "dropped_bad_duration": 5614,
+  "dropped_bad_enum": 0,
+  "n_duplicate_rides": 0,
+  "n_clean": 5547380,
+  "drop_rate_pct": 0.101,
+  "rules": {
+    "duration": "(0, 1440] 分钟",
+    "dup": "ride_id 去重",
+    "null_station_keep": "站点/坐标缺失保留为空"
+  }
+}
